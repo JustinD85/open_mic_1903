@@ -26,7 +26,7 @@ class UserTest < MiniTest::Test
     sal.learn(joke_1)
     sal.learn(joke_2)
 
-    assert_equal 2, sal.jokes.length
+    assert_equal [joke_1, joke_2], sal.jokes
   end
 
   def test_user_will_learn_joke_when_told_joke
@@ -36,10 +36,10 @@ class UserTest < MiniTest::Test
     sal.learn(joke_2)
 
     sal.tell(ali, joke_1)
-    assert_equal 1, ali.jokes.length
+    assert_equal [joke_1], ali.jokes
 
     sal.tell(ali, joke_2)
-    assert_equal 2, ali.jokes.length
+    assert_equal [joke_1, joke_2], ali.jokes
   end
 
   def test_it_can_find_joke_by_id
@@ -52,5 +52,7 @@ class UserTest < MiniTest::Test
 
     assert_instance_of Joke, ali.joke_by_id(1)
     assert_instance_of Joke, ali.joke_by_id(2)
+    assert_equal joke_1.question, ali.joke_by_id(1).question
+    assert_equal joke_2.question, ali.joke_by_id(2).question
   end
 end
